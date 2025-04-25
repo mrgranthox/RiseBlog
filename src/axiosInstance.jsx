@@ -2,7 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast'; 
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL_NEW,
+  baseURL: import.meta.env.VITE_BACKEND_URL_NEW || 'https://blog-post-ubkk.onrender.com/api',
   withCredentials: true,
   timeout: 10000,
 });
