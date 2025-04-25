@@ -39,7 +39,7 @@ const AuthPage = () => {
   
         try {
           await getUserData();
-          await postByUser();
+          // await postByUser();
           navigate("/");
           toast.success(state === "Sign Up" ? "Account created!" : "Logged in!", { id: toastId });
         } catch (nestedError) {
