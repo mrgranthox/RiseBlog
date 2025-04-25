@@ -8,7 +8,7 @@ export const NetworkProvider = ({ children }) => {
 
   const checkInternetConnection = async () => {
     try {
-      const res = await fetch("/health-check", { cache: "no-store" });
+      const res = await fetch("https://blog-post-ubkk.onrender.com/health-check", { cache: "no-store" });
       return res.ok;
     } catch {
       return false;
