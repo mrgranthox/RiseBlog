@@ -1,0 +1,76 @@
+import React, { useContext } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { AppContext } from './context/context';
+import NetworkContext from './utils/NetworkStatus';
+import { Toaster } from 'react-hot-toast';
+
+import Home from './pages/Home';
+import Articles from './pages/Articles';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Profile from './pages/Profile';
+import CreatePost from './pages/CreatePost';
+import EditPost from './pages/EditPost';
+import PostDetails from './pages/PostDetails';
+import AuthPage from './pages/AuthPage';
+import VerifyAccount from './pages/VerifyEmail';
+import ResetPassword from './pages/Reset';
+import EditProfile from './pages/EditProfile';
+
+function App() {
+  const { loading } = useContext(AppContext);
+  const { isOnline } = useContext(NetworkContext); // <-- track connectivity
+
+  if (!isOnline) {
+    return (
+      <div className="flex items-center justify-center h-screen text-center px-4">
+        <div>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2 animate-pulse">You're Offline</h2>
+          <p className="text-gray-600">Please check your internet connection and try again.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen text-center">
+        <p className="text-gray-700 animate-pulse">Fetching data...</p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            borderRadius: '10px',
+            padding: '12px 16px',
+            fontSize: '0.95rem',
+          },
+          success: { background: '#D1FAE5', color: '#064E3B' },
+          error: { background: '#FECACA', color: '#7F1D1D' },
+        }}
+      />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="articles" element={<Articles />} />
+        <Route path="articles/post/:slug" element={<PostDetails />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/edit" element={<EditProfile />} />
+        <Route path="/profile/create" element={<CreatePost />} />
+        <Route path="/profile/edit-post/:id" element={<EditPost />} />
+        <Route path="/login" element={<AuthPage />} />
+        <Route path="/auth/verify" element={<VerifyAccount />} />
+        <Route path="/auth/reset" element={<ResetPassword />} />
+      </Routes>
+    </>
+  );
+}
+
+export default App;
