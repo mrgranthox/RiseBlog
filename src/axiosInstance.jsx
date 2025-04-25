@@ -32,10 +32,7 @@ axiosInstance.interceptors.response.use(
     } else if (!error.response) {
       console.error('Failed to load. Check internet connection and refresh page', error.message);
       toast.error('Network error. Please check your connection.');
-    } else {
-      console.error(`❌ API response error from ${error.config?.url || 'unknown'}:`, error.response.status);
-      toast.error(`Error ${error.response.status}: ${error.response.statusText}`);
-    }
+    } 
     return Promise.reject(error);
   }
 );

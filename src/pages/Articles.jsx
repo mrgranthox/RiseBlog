@@ -47,7 +47,7 @@ const Articles = () => {
                   {post.excerpt || post.content?.slice(0, 100)}
                 </p>
                 <div className="text-xs text-gray-500 mt-2">
-                  By {post.author?.name || "Unknown Author"} • {format(new Date(post.createdAt))} ago
+                  By {post.author?.name || "Unknown Author"} • {formatDate(post.createdAt)} ago
                 </div>
               </div>
               <Link
@@ -115,6 +115,11 @@ const Articles = () => {
     <Footer />
     </>
   );
+};
+
+const formatDate = (dateStr) => {
+  const date = new Date(dateStr);
+  return `${date.toLocaleDateString()}`
 };
 
 export default Articles;

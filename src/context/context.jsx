@@ -77,7 +77,8 @@ const exponentialBackoff = async (fn, retries = 1, delay = 100) => {
       const response = await axiosInstance.get('/post/user-posts');
       setGetPostByUser(response.data.postDataByUser)
   
-      console.log("Fetched posts by user:", response.data.postDataByUser); // Changed to use response directly
+     setGetPostByUser(response.data.postDataByUser); 
+     console.log(getPostByUser)
   
     } catch (error) {
       console.error("Error fetching posts by user:", error);
@@ -105,8 +106,7 @@ const exponentialBackoff = async (fn, retries = 1, delay = 100) => {
         setIsLoggedin(false);
         setUserData(null);
       }
-    } catch (error) {
-      console.error("Authentication check failed:", error);
+    } catch {
       setIsLoggedin(false);
       setUserData(null);
     }
