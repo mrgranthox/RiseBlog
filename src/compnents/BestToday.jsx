@@ -69,46 +69,48 @@ const BestToday = () => {
        {postLists ? <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
           {bestPosts.map((post, idx) => (
             <motion.div 
-              key={post._id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.2 }}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="bg-white rounded-xl overflow-hidden shadow-lg"
-            >
-              <div className="relative">
-                <img 
-                  src={post.coverImage || "/api/placeholder/400/240"} 
-                  className="w-full h-48 object-cover" 
-                  alt={post.title} 
-                />
-                <div className="absolute top-3 left-3 bg-white rounded-full px-2 py-1 text-xs font-medium flex items-center gap-1">
-                  <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                    <img src={post.author?.profilePicture || "/api/placeholder/20/20"} alt={post.author?.name || 'Author'} />
-                  </div>
-                  <span>{post.author?.name || 'Unknown'}</span>
+            key={post._id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: idx * 0.2 }}
+            whileHover={{ y: -8, transition: { duration: 0.3 } }}
+            className="bg-white rounded-xl overflow-hidden shadow-lg flex flex-col"
+          >
+            <div className="relative flex-grow">
+              <img 
+                src={post.coverImage || "/api/placeholder/400/240"} 
+                className="w-full h-48 object-cover" 
+                alt={post.title} 
+              />
+              <div className="absolute top-3 left-3 bg-white rounded-full px-2 py-1 text-xs font-medium flex items-center gap-1">
+                <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                  <img src={post.author?.profilePicture || "/api/placeholder/20/20"} alt={post.author?.name || 'Author'} />
                 </div>
-                <div className={`absolute bottom-3 left-3 ${getCategoryColor(post.category)} text-white rounded-md px-3 py-1 text-xs`}>
-                  {post.tags}
-                </div>
+                <span>{post.author?.name || 'Unknown'}</span>
               </div>
-              <div className="p-4">
-                <h3 className="font-bold text-lg mb-2">{post.title}</h3>
-                <p className="text-sm text-gray-600 mb-4">{post.excerpt || 'No excerpt available...'}</p>
-                <div className="flex justify-between items-center text-sm text-gray-500">
-                  <span>{formatDate(post.createdAt)}</span>
-                </div>
-                <Link to={`/articles/post/${post.slug}`}>
-                  <motion.button 
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="mt-4 bg-blue-600 text-white rounded-md py-2 px-4 w-full text-sm font-medium"
-                  >
-                    Read More
-                  </motion.button>
-                </Link>
+              <div className={`absolute bottom-3 left-3 ${getCategoryColor(post.category)} text-white rounded-md px-3 py-1 text-xs`}>
+                {post.tags}
               </div>
-            </motion.div>
+            </div>
+            
+            <div className="p-4 flex flex-col justify-between">
+              <h3 className="font-bold text-lg mb-2">{post.title}</h3>
+              <p className="text-sm text-gray-600 mb-4">{post.excerpt || 'No excerpt available...'}</p>
+              <div className="flex justify-between items-center text-sm text-gray-500">
+                <span>{formatDate(post.createdAt)}</span>
+              </div>
+              <Link to={`/articles/post/${post.slug}`}>
+                <motion.button 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="mt-4 bg-blue-600 text-white rounded-md py-2 px-4 w-full text-sm font-medium"
+                >
+                  Read More
+                </motion.button>
+              </Link>
+            </div>
+          </motion.div>
+          
           ))}
         </div> : <p className='text-lg text-white font-base flex align-center justify-center'>Check internet connection and refresh page</p>
 }
