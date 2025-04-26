@@ -38,13 +38,14 @@ const AuthPage = () => {
         setIsLoggedin(true);
   
         try {
+          await new Promise(resolve => setTimeout(resolve, 500));
           await getUserData();
           await postByUser();
           navigate("/");
-          toast.success(state === "Sign Up" ? "Account created!" : "Logged in!", { id: toastId });
+          toast.success(state === "Sign Up" ? "Account created successfully!" : "Logged in successfully!", { id: toastId });
         } catch (nestedError) {
           console.error("⚠️ Error after login:", nestedError);
-          toast.error("Login succeeded but failed to fetch data", { id: toastId });
+          toast.error("Check internet connection or refresh page", { id: toastId });
         }
       } else {
         toast.error(data.message || "Something went wrong", { id: toastId });

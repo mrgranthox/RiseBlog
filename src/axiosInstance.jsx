@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
       console.warn('⚠️ Request canceled:', error.message);
     } else if (!error.response) {
       console.error('Failed to load. Check internet connection and refresh page', error.message);
-      toast.error('Network error. Please check your connection.');
+      toast.error('Please check your connection or refresh page.');
     } 
     return Promise.reject(error);
   }
