@@ -12,12 +12,14 @@ export const AppContextProvider = (props) => {
   const backendurl = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [getPostByUser, setGetPostByUser] = useState('')
+  const [getPostByUser, setGetPostByUser] = useState([])
   const [allUsers, setAllUsers] = useState(null);
   const [postLists, setPostLists] = useState(null);
   const [loading, setLoading] = useState(true);
   const [networkReady, setNetworkReady] = useState(false);
 
+
+  
   // Update networkReady when isOnline changes
   useEffect(() => {
     setNetworkReady(isOnline);
@@ -72,11 +74,12 @@ const exponentialBackoff = async (fn, retries = 1, delay = 100) => {
       throw new Error(data.message);
     }
   };
+
+  
   const postByUser = async () => {
     try {
       const response = await axiosInstance.get('/post/user-posts');
-      setGetPostByUser(response.data.postDataByUser)
-  
+ 
      setGetPostByUser(response.data.postDataByUser); 
      console.log(getPostByUser)
   
@@ -102,6 +105,7 @@ const exponentialBackoff = async (fn, retries = 1, delay = 100) => {
       if (data.success) {
         setIsLoggedin(true);
         await getUserData();
+        await postByUser();
       } else {
         setIsLoggedin(false);
         setUserData(null);

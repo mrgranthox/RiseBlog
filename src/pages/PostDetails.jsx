@@ -23,7 +23,7 @@ const PostDetails = () => {
         const res = await axiosInstance.get(`/post/posts/${slug}`);
         setPost(res.data.post);
       } catch {
-        toast.error('Failed to load post. Check Internet Connection and refresh page!') 
+        toast.error('Failed to load post.') 
       }
     };
     fetchPost();

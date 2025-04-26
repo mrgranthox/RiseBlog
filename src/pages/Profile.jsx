@@ -15,7 +15,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && userData) {
       postByUser();
     }
   }, [isLoggedIn]);
@@ -60,10 +60,10 @@ const Profile = () => {
             className="md:col-span-4 md:sticky md:top-24 self-start bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-3xl shadow-2xl space-y-6"
           >
             <div className="relative w-32 h-32 mx-auto">
-              <img src={userData.profilePicture ? userData.profilePicture : "Profile"} alt="Profile" className="relative z-10 rounded-full border-4 border-white shadow-lg object-cover w-full h-full" />
+              <img src={userData?.profilePicture || "/RISEBLOG.svg"} alt="Profile" className="relative z-10 rounded-full border-4 border-white shadow-lg object-cover w-full h-full" />
               <div className="absolute inset-0 bg-indigo-500 blur-xl opacity-30 rounded-full scale-110"></div>
             </div>
-            <h1 className="text-3xl font-bold text-center">{userData.name}</h1>
+            <h1 className="text-3xl font-bold text-center">{userData?.name || "loading..."}</h1>
             <p className="text-white/80 leading-relaxed text-lg">
                 {userData?.bio || "You haven't set a bio yet."}
               </p>
@@ -109,7 +109,7 @@ const Profile = () => {
                         className="bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 shadow-md hover:shadow-2xl relative group"
                       >
                         <div className="relative">
-                          <img src={post.coverImage} alt={post.title} className="w-full h-48 object-cover" />
+                          <img src={post?.coverImage || "/RISEBLOG.svg"} alt={post?.title} className="w-full h-48 object-cover" />
                           <div className="absolute top-3 right-3 z-20">
                             <button 
                               onClick={() => toggleActions(i)}
