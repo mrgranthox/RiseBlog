@@ -73,7 +73,7 @@ const Hero = () => {
             A clean, powerful, and elegant way to express your thoughts — start writing now.
           </motion.p>
 
-          {!isLoggedin && (
+          {!isLoggedin ? (
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -84,6 +84,18 @@ const Hero = () => {
               className="mt-8 px-14 py-2  bg-gradient-to-r from-blue-600 to-purple-600 text-white text-lg font-semibold rounded-full shadow-lg hover:shadow-xl hover:brightness-110 transition-all duration-300"
             >
               Log in
+            </motion.button>
+          ) : (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 1.2, ease: "easeOut" }}
+              onClick={() => navigate('/profile/create')}
+              className="mt-8 px-14 py-2  bg-gradient-to-r from-blue-600 to-purple-600 text-white text-lg font-semibold rounded-full shadow-lg hover:shadow-xl hover:brightness-110 transition-all duration-300"
+            >
+              Create Post
             </motion.button>
           )}
         </motion.div>
