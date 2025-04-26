@@ -138,6 +138,7 @@ const CreatePost = () => {
                   name="slug"
                   value={form.slug}
                   onChange={handleChange}
+                  // disabled
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40"
                   placeholder="e.g. rise-of-ai-startups"
                 />

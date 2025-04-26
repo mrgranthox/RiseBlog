@@ -99,7 +99,10 @@ const Profile = () => {
               </div>
 
               {getPostByUser && (
-                <div className="max-h-[800px] overflow-y-auto pr-2 -mr-2 pb-4 scrollbar-hide">
+                <div 
+                className="max-h-[800px] overflow-y-auto pr-2 -mr-2 pb-4 scrollbar-hide"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {getPostByUser.map((post, i) => (
                       <motion.div
