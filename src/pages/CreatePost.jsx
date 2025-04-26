@@ -132,12 +132,11 @@ const CreatePost = () => {
               </div>
 
               <div>
-                <label className="block text-sm mb-1">Slug (required)</label>
+                <label className="block text-sm mb-1">Slug (optional)</label>
                 <input
                   type="text"
                   name="slug"
                   value={form.slug}
-                  required
                   onChange={handleChange}
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40"
                   placeholder="e.g. rise-of-ai-startups"
@@ -151,7 +150,7 @@ const CreatePost = () => {
                   name="coverImage"
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="text-white"
+                  className="text-white overflow-hidden"
                 />
               </div>
 
