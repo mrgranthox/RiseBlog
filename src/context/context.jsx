@@ -81,7 +81,6 @@ const exponentialBackoff = async (fn, retries = 1, delay = 100) => {
       const response = await axiosInstance.get('/post/user-posts');
  
      setGetPostByUser(response.data.postDataByUser); 
-     console.log(getPostByUser)
   
     } catch (error) {
       console.error("Error fetching posts by user:", error);

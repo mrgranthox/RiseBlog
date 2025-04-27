@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { AppContext } from "../context/context";
-import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import Footer from "../compnents/Footer";
 import Navbar from "../compnents/Navbar";
@@ -99,7 +98,7 @@ const Articles = () => {
                   <img
                     src={post.coverImage || "/placeholder.png"}
                     alt="Trending post"
-                    className="w-16 h-14 object-cover rounded"
+                    className="w-16 h-14 object-contain rounded"
                   />
                   <div>
                     <p className="text-sm font-medium text-gray-800 line-clamp-2">
@@ -148,7 +147,7 @@ const Articles = () => {
                     <img
                       src={post.coverImage || "/placeholder.png"}
                       alt="Trending post"
-                      className="w-full h-28 object-cover rounded-lg mb-2"
+                      className="w-full h-28 object-contain rounded-lg mb-2"
                     />
                     <p className="text-sm font-medium text-gray-800 line-clamp-2">
                       {post.title}

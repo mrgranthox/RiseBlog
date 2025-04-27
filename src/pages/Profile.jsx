@@ -31,8 +31,7 @@ const Profile = () => {
      const { data } = await axiosInstance.delete(`/post/delete-post/${id}`)
 
      if(data.success) {
-      toast.success('Post deleted successfully!', { id: toastId }) 
-      toast.success(data.message)
+      toast.success(data.message, { id: toastId })
       await postByUser();
      }else {
      toast.error(data.message || 'Something went wrong', { id: toastId })

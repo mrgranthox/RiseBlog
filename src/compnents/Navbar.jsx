@@ -79,7 +79,7 @@ const Navbar = () => {
           {isLoggedin && userData?.name && (
   <div className='relative group'>
     <div className='bg-gray-200 text-black text-sm w-8 h-8 flex items-center justify-center rounded-full cursor-pointer transition-all duration-300 group-hover:scale-110 group-hover:bg-gray-300'>
-      {userData.name.charAt(0).toUpperCase()}
+     {userData.profilePicture ? <img src={userData.profilePicture} className='w-full h-full rounded-full object-cover' /> : userData.name.charAt(0).toUpperCase()}
     </div>
     <div className='absolute hidden group-hover:flex flex-col bg-white text-gray-800 shadow-lg rounded-lg right-0 min-w-[150px] z-50'>
       <button onClick={() => navigate('/profile')} className='text-left px-4 py-2 hover:bg-gray-100'>Profile</button>

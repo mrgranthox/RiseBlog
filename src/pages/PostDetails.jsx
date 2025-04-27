@@ -67,7 +67,7 @@ const PostDetails = () => {
           <img
             src={post.coverImage}
             alt={post.title}
-            className="rounded-xl w-full object-cover mb-6 max-h-[500px]"
+            className="rounded-xl w-full h-auto object-contain mb-6 max-h-[500px]"
           />
           <p className="text-sm text-gray-500 mb-8 italic text-center">
             {post.imageCaption || 'Image related to the article'}

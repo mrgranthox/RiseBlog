@@ -134,6 +134,7 @@ const EditPost = () => {
                   name="tags"
                   value={form.tags}
                   onChange={handleChange}
+                  required
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40"
                   placeholder="e.g. tech, coding, AI"
                 />
