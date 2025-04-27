@@ -7,7 +7,6 @@ import Navbar from "../compnents/Navbar";
 import { toast } from "react-hot-toast";
 import { ArrowLeft } from "lucide-react";
 import { AppContext } from "../context/context";
-import { Bars } from "react-loader-spinner";
 
 const PostDetails = () => {
   const { slug } = useParams();
@@ -31,16 +30,13 @@ const PostDetails = () => {
 
   if (!post)
     return (
-      <div className="flex justify-center items-center h-screen">
-        <Bars
-          height="60"
-          width="90"
-          color="#6B5BFA "
-          ariaLabel="bars-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />
+      <div className="flex items-center justify-center h-screen transparent">
+        <div className="flex space-x-2">
+          <div className="w-2 h-10 bg-blue-600 rounded animate-bounce [animation-delay:-0.15s]"></div>
+          <div className="w-2 h-8 bg-purple-600 rounded animate-bounce"></div>
+          <div className="w-2 h-10 bg-blue-600 rounded animate-bounce [animation-delay:-0.3s]"></div>
+          <div className="w-2 h-8 bg-purple-600 rounded animate-bounce"></div>
+        </div>
       </div>
     );
 
