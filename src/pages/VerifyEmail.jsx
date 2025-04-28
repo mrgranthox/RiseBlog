@@ -31,6 +31,7 @@ const VerifyAccount = () => {
       toast.error(error.message);
     }
   };
+
   useEffect(() => {
     userData && userData.isAccountVerified;
   }, [userData]);

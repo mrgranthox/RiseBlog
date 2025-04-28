@@ -1,96 +1,106 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../compnents/Navbar'
-import Footer from '../compnents/Footer'
-import { motion } from 'framer-motion'
-import { ArrowLeft, Upload } from 'lucide-react'
-import { useNavigate, useParams } from 'react-router-dom'
-import axiosInstance from '../axiosInstance'
-import { toast } from 'react-hot-toast'
+import React, { useEffect, useState } from "react";
+import Navbar from "../compnents/Navbar";
+import Footer from "../compnents/Footer";
+import { motion } from "framer-motion";
+import { ArrowLeft, Upload } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+import axiosInstance from "../axiosInstance";
+import { toast } from "react-hot-toast";
 
 const EditPost = () => {
-  const { id } = useParams()
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    title: '',
-    content: '',
-    tags: '',
-    excerpt: '',
-    slug: '',
-  })
-  const [coverImage, setCoverImage] = useState(null)
-  const [previewUrl, setPreviewUrl] = useState(null)
+    title: "",
+    content: "",
+    tags: "",
+    excerpt: "",
+    slug: "",
+  });
+  const [coverImage, setCoverImage] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const { data } = await axiosInstance.get(`/post/get-user-by-post/${id}`)
-        const post = data.post
+        const { data } = await axiosInstance.get(
+          `/post/get-user-by-post/${id}`
+        );
+        const post = data.post;
 
         setForm({
-          title: post.title || '',
-          content: post.content || '',
-          tags: post.tags?.join(', ') || '',
-          excerpt: post.excerpt || '',
-          slug: post.slug || '',
-        })
-        setCoverImage(post.coverImage || null)
+          title: post.title || "",
+          content: post.content || "",
+          tags: post.tags?.join(", ") || "",
+          excerpt: post.excerpt || "",
+          slug: post.slug || "",
+        });
+        setCoverImage(post.coverImage || null);
       } catch (error) {
-        toast.error('Failed to load post data')
-        console.error(error)
+        toast.error("Failed to load post data");
+        console.error(error);
       }
-    }
+    };
 
-    fetchPost()
-  }, [id])
+    fetchPost();
+  }, [id]);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0]
-    setCoverImage(file)
-    setPreviewUrl(URL.createObjectURL(file))
-  }
+    const file = e.target.files[0];
+    setCoverImage(file);
+    setPreviewUrl(URL.createObjectURL(file));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const toastId = toast.loading('Updating post...')
+    e.preventDefault();
+    const toastId = toast.loading("Updating post...");
 
     try {
-      const formData = new FormData()
-      formData.append('title', form.title)
-      formData.append('content', form.content)
-      formData.append('tags', form.tags)
-      formData.append('excerpt', form.excerpt)
-      formData.append('slug', form.slug)
+      const formData = new FormData();
+      formData.append("title", form.title);
+      formData.append("content", form.content);
+      formData.append("tags", form.tags);
+      formData.append("excerpt", form.excerpt);
+      formData.append("slug", form.slug);
       if (coverImage instanceof File) {
-        formData.append('coverImage', coverImage)
+        formData.append("coverImage", coverImage);
       }
 
-      const { data } = await axiosInstance.patch(`/post/edit-post/${id}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
+      const { data } = await axiosInstance.patch(
+        `/post/edit-post/${id}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
       if (data.success) {
-        toast.success('Post updated!', { id: toastId })
-        navigate('/profile')
+        toast.success("Post updated!", { id: toastId });
+        navigate("/profile");
       } else {
-        toast.error(data.message || 'Something went wrong', { id: toastId })
+        toast.error(data.message || "Something went wrong", { id: toastId });
       }
     } catch (error) {
-      console.error(error)
-      toast.error('Post update failed!', { id: toastId })
+      console.error(error);
+      toast.error("Post update failed!", { id: toastId });
     }
-  }
+  };
 
   return (
     <div>
       <Navbar />
       <section className="min-h-screen px-4 py-16 md:py-24 bg-gradient-to-br from-[#1e1e2f] via-[#2c2c3f] to-[#1e1e2f] text-white">
         <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-xl border border-white/20 p-10 rounded-3xl shadow-2xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             <button
               onClick={() => navigate(-1)}
               className="flex items-center gap-2 text-sm text-white/60 hover:text-white mb-8 transition"
@@ -100,7 +110,11 @@ const EditPost = () => {
             </button>
 
             <h2 className="text-3xl font-bold mb-6">Edit Post</h2>
-            <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-6"
+              encType="multipart/form-data"
+            >
               <div>
                 <label className="block text-sm mb-1">Title</label>
                 <input
@@ -128,7 +142,9 @@ const EditPost = () => {
               </div>
 
               <div>
-                <label className="block text-sm mb-1">Tags (comma separated)</label>
+                <label className="block text-sm mb-1">
+                  Tags (comma separated)
+                </label>
                 <input
                   type="text"
                   name="tags"
@@ -159,7 +175,7 @@ const EditPost = () => {
                   name="slug"
                   value={form.slug}
                   onChange={handleChange}
-                  // disabled 
+                  // disabled
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40"
                   placeholder="e.g. rise-of-ai-startups"
                 />
@@ -176,9 +192,12 @@ const EditPost = () => {
                 />
               </div>
 
-              {(previewUrl || (typeof coverImage === 'string' && coverImage)) && (
+              {(previewUrl ||
+                (typeof coverImage === "string" && coverImage)) && (
                 <div className="mt-2">
-                  <p className="text-sm text-white/70 mb-1">Current Cover Image:</p>
+                  <p className="text-sm text-white/70 mb-1">
+                    Current Cover Image:
+                  </p>
                   <img
                     src={previewUrl || coverImage}
                     alt="Cover Preview"
@@ -204,7 +223,7 @@ const EditPost = () => {
       </section>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default EditPost
+export default EditPost;

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 const Subscribe = () => {
   return (
@@ -40,7 +40,8 @@ const Subscribe = () => {
           className="text-gray-600 mb-6 relative z-10 text-sm sm:text-base"
         >
           Subscribe to our newsletter and get up to{" "}
-          <span className="text-indigo-600 font-medium">40% off</span> on our exclusive service.
+          <span className="text-indigo-600 font-medium">40% off</span> on our
+          exclusive service.
         </motion.p>
 
         {/* Form */}

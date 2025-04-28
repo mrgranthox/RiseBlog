@@ -37,7 +37,7 @@ const AuthPage = () => {
         setIsLoggedin(true);
 
         try {
-          await new Promise((resolve) => setTimeout(resolve, 500));
+          await new Promise((resolve) => setTimeout(resolve, 15000));
           await getUserData();
           await postByUser();
           navigate("/");
@@ -47,8 +47,7 @@ const AuthPage = () => {
               : "Logged in successfully!",
             { id: toastId }
           );
-        } catch (nestedError) {
-          console.error("⚠️ Error after login:", nestedError);
+        } catch {
           toast.error("Check internet connection or refresh page", {
             id: toastId,
           });

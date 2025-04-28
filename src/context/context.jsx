@@ -13,15 +13,14 @@ export const AppContextProvider = (props) => {
   const [postLists, setPostLists] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const exponentialBackoff = async (fn, retries = 1, delay = 100) => {
+  const exponentialBackoff = async (fn, retries = 5, delay = 15000) => {
     return safeRequest(async () => {
       try {
         return await fn();
       } catch (error) {
         if (retries > 0) {
-          toast.log(`Retrying in ${delay}ms... (${retries} attempts left)`);
           await new Promise((resolve) => setTimeout(resolve, delay));
-          return exponentialBackoff(fn, retries - 1, delay * 1);
+          return exponentialBackoff(fn, retries - 1, delay * 2);
         }
         throw error;
       }
@@ -34,10 +33,9 @@ export const AppContextProvider = (props) => {
         exponentialBackoff(getAllUsers),
         exponentialBackoff(getAllPost),
       ]);
-    } catch (error) {
-      toast.error("Failed to fetch data after multiple retries", error);
+    } catch {
       toast.error(
-        "Unable to fetch data. Please check your network connection."
+        "Failed to fetch data. Please check your network connection and refresh page."
       );
     } finally {
       setLoading(false);
@@ -68,7 +66,7 @@ export const AppContextProvider = (props) => {
 
       setGetPostByUser(response.data.postDataByUser);
     } catch (error) {
-      console.error("Error fetching posts by user:", error);
+      toast.error("Error fetching posts by user");
       throw error;
     }
   };
@@ -107,7 +105,6 @@ export const AppContextProvider = (props) => {
   const safeRequest = async (requestFn) => {
     const safetyTimeout = setTimeout(() => {
       if (loading) {
-        console.log("Request taking too long, resetting loading state");
         setLoading(false);
       }
     }, 10000);

@@ -19,15 +19,15 @@ const Articles = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 sticky top-0 bg-gray-100 py-2 z-10">
               For you
             </h2>
-            
+
             {/* Scrollable posts container - Mobile optimized */}
-            <div 
-              className="overflow-y-auto flex-1" 
-              style={{ 
-                height: 'calc(100vh - 180px)', 
-                maxHeight: 'calc(100vh - 180px)',
-                scrollbarWidth: 'none', 
-                msOverflowStyle: 'none'
+            <div
+              className="overflow-y-auto flex-1"
+              style={{
+                height: "calc(100vh - 180px)",
+                maxHeight: "calc(100vh - 180px)",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
               }}
             >
               <style jsx="true">{`
@@ -35,11 +35,14 @@ const Articles = () => {
                   display: none;
                 }
               `}</style>
-              
+
               {loading ? (
                 <div className="space-y-4 animate-pulse">
                   {[...Array(3)].map((_, i) => (
-                    <div key={i} className="bg-gray-100 rounded-xl p-4 shadow-md">
+                    <div
+                      key={i}
+                      className="bg-gray-100 rounded-xl p-4 shadow-md"
+                    >
                       <div className="h-5 w-2/3 bg-gray-300 rounded mb-3"></div>
                       <div className="h-4 w-full bg-gray-200 rounded mb-2"></div>
                       <div className="h-4 w-5/6 bg-gray-200 rounded"></div>
@@ -68,7 +71,8 @@ const Articles = () => {
                           {post.excerpt || post.content?.slice(0, 100)}
                         </p>
                         <div className="text-xs text-gray-500 mt-2">
-                          By {post.author?.name || "Unknown Author"} • {formatDate(post.createdAt)} ago
+                          By {post.author?.name || "Unknown Author"} •{" "}
+                          {formatDate(post.createdAt)} ago
                         </div>
                       </div>
                       <Link
@@ -88,7 +92,9 @@ const Articles = () => {
           <aside className="hidden md:block w-1/3 md:sticky md:top-6 md:self-start space-y-6 h-fit">
             {/* Trending Section */}
             <div className="bg-white p-4 rounded-xl shadow">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Trending</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                Trending
+              </h3>
               {postLists?.slice(0, 3).map((post) => (
                 <Link
                   key={post._id}
@@ -114,14 +120,18 @@ const Articles = () => {
 
             {/* Recommended Users */}
             <div className="bg-white p-4 rounded-xl shadow">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Recommended Users</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                Recommended Users
+              </h3>
               {allUsers?.slice(0, 4).map((user) => (
                 <div
                   key={user._id}
                   className="flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0"
                 >
                   <div>
-                    <p className="text-sm font-medium text-gray-800">{user.name}</p>
+                    <p className="text-sm font-medium text-gray-800">
+                      {user.name}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -131,8 +141,13 @@ const Articles = () => {
           {/* Mobile Trending Section - Only visible on mobile at bottom */}
           <div className="w-full block md:hidden mt-4">
             <div className="bg-white p-4 rounded-xl shadow">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Trending</h3>
-              <div className="flex overflow-x-auto gap-4 pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                Trending
+              </h3>
+              <div
+                className="flex overflow-x-auto gap-4 pb-2"
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              >
                 <style jsx="true">{`
                   div::-webkit-scrollbar {
                     display: none;
@@ -163,8 +178,12 @@ const Articles = () => {
         </div>
       ) : (
         <div className="min-h-screen flex flex-col items-center justify-center">
-          <h1 className="text-lg text-gray-600 font-base flex align-center justify-center">Failed to load Articles</h1>
-          <h3 className="text-lg text-gray-600 font-base flex align-center justify-center">Check Internet Connection and refresh page</h3>
+          <h1 className="text-lg text-gray-600 font-base flex align-center justify-center">
+            Failed to load Articles
+          </h1>
+          <h3 className="text-lg text-gray-600 font-base flex align-center justify-center">
+            Check Internet Connection and refresh page
+          </h3>
         </div>
       )}
 

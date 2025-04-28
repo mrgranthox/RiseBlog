@@ -93,7 +93,7 @@ const PostDetails = () => {
           {/* Sidebar */}
           <aside className="w-full lg:col-span-1 flex flex-col gap-8">
             {/* Trending Section */}
-            <div className="bg-white p-6 rounded-2xl shadow-md w-full">
+            <div className="bg-white p-6 rounded-2xl shadow-md w-full ">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
                 🔥 Trending
               </h3>
@@ -123,7 +123,7 @@ const PostDetails = () => {
             {/* Recommended Users */}
             <div className="bg-white p-6 rounded-2xl shadow-md w-full">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                👥 Recommended Users
+                👥 Recommended Authors
               </h3>
               <div className="divide-y divide-gray-200">
                 {allUsers?.slice(0, 4).map((user) => (
@@ -132,11 +132,14 @@ const PostDetails = () => {
                     className="flex justify-between items-center py-3"
                   >
                     <div className="flex items-center gap-3">
-                      <img
-                        src={user.profilePicture || "/default-avatar.png"}
-                        alt={user.name}
-                        className="w-8 h-8 rounded-full object-cover"
-                      />
+                      {user.profilePicture ? (
+                        <img
+                          src={user.profilePicture}
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
+                      ) : (
+                        user.name.charAt(0).toUpperCase()
+                      )}
                       <p className="text-sm font-medium text-gray-800">
                         {user.name}
                       </p>

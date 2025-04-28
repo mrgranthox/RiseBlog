@@ -1,76 +1,77 @@
-import React, {  useState } from 'react'
-import Navbar from '../compnents/Navbar'
-import Footer from '../compnents/Footer'
-import { motion } from 'framer-motion'
-import { ArrowLeft, Upload } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import axiosInstance from '../axiosInstance'
-import { toast } from 'react-hot-toast'
-
+import React, { useState } from "react";
+import Navbar from "../compnents/Navbar";
+import Footer from "../compnents/Footer";
+import { motion } from "framer-motion";
+import { ArrowLeft, Upload } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import axiosInstance from "../axiosInstance";
+import { toast } from "react-hot-toast";
 
 const CreatePost = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [form, setForm] = useState({
-    title: '',
-    content: '',
-    tags: '',
-    excerpt: '',
-    slug: '',
-  })
-  const [coverImage, setCoverImage] = useState(null)
+    title: "",
+    content: "",
+    tags: "",
+    excerpt: "",
+    slug: "",
+  });
+  const [coverImage, setCoverImage] = useState(null);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleImageChange = (e) => {
-    setCoverImage(e.target.files[0])
-  }
+    setCoverImage(e.target.files[0]);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-  const toastId = toast.loading('Creating post...') 
+    const toastId = toast.loading("Creating post...");
 
-    axios.defaults.withCredentials = true
+    axios.defaults.withCredentials = true;
 
-    const formData = new FormData()
-    formData.append('title', form.title)
-    formData.append('content', form.content)
-    formData.append('tags', form.tags)
-    formData.append('excerpt', form.excerpt)
-    formData.append('slug', form.slug)
+    const formData = new FormData();
+    formData.append("title", form.title);
+    formData.append("content", form.content);
+    formData.append("tags", form.tags);
+    formData.append("excerpt", form.excerpt);
+    formData.append("slug", form.slug);
     if (coverImage) {
-      formData.append('coverImage', coverImage)
+      formData.append("coverImage", coverImage);
     }
 
     try {
-      const { data } = await axiosInstance.post( '/post/create-post', formData, {
+      const { data } = await axiosInstance.post("/post/create-post", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
-      })
+      });
 
-      if(data.success) {
-        toast.success('Post created successfully!', { id: toastId }) 
-        navigate('/profile')
-      }else {
-            toast.error(data.message || 'Something went wrong', { id: toastId })
+      if (data.success) {
+        toast.success("Post created successfully!", { id: toastId });
+        navigate("/profile");
+      } else {
+        toast.error(data.message || "Something went wrong", { id: toastId });
       }
-     
     } catch {
-    toast.error('Failed to create post!', { id: toastId })
+      toast.error("Failed to create post!", { id: toastId });
     }
-  }
+  };
 
   return (
     <div>
       <Navbar />
       <section className="min-h-screen px-4 py-16 md:py-24 bg-gradient-to-br from-[#1e1e2f] via-[#2c2c3f] to-[#1e1e2f] text-white">
         <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-xl border border-white/20 p-10 rounded-3xl shadow-2xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             <button
               onClick={() => navigate(-1)}
               className="flex items-center gap-2 text-sm text-white/60 hover:text-white mb-8 transition"
@@ -80,7 +81,11 @@ const CreatePost = () => {
             </button>
 
             <h2 className="text-3xl font-bold mb-6">Create New Post</h2>
-            <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-6"
+              encType="multipart/form-data"
+            >
               <div>
                 <label className="block text-sm mb-1">Title</label>
                 <input
@@ -108,7 +113,9 @@ const CreatePost = () => {
               </div>
 
               <div>
-                <label className="block text-sm mb-1">Tags (comma separated)</label>
+                <label className="block text-sm mb-1">
+                  Tags (comma separated)
+                </label>
                 <input
                   type="text"
                   name="tags"
@@ -172,7 +179,7 @@ const CreatePost = () => {
       </section>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default CreatePost
+export default CreatePost;

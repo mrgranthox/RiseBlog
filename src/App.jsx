@@ -27,6 +27,7 @@ function App() {
           <div className="w-2 h-8 bg-purple-600 rounded animate-bounce"></div>
           <div className="w-2 h-10 bg-blue-600 rounded animate-bounce [animation-delay:-0.3s]"></div>
           <div className="w-2 h-8 bg-purple-600 rounded animate-bounce"></div>
+          <div className="w-2 h-10 bg-blue-600 rounded animate-bounce [animation-delay:-0.3s]"></div>
         </div>
       </div>
     );
