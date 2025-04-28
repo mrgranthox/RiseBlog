@@ -18,7 +18,7 @@ const Profile = () => {
     if (isLoggedIn && userData) {
       postByUser();
     }
-  }, [isLoggedIn, postByUser()]);
+  }, [isLoggedIn]);
 
   const toggleActions = (index) => {
     setShowActionsFor(showActionsFor === index ? null : index);
