@@ -37,10 +37,10 @@ const AuthPage = () => {
         setIsLoggedin(true);
 
         try {
-          await new Promise((resolve) => setTimeout(resolve, 15000));
-          await getUserData();
-          await postByUser();
+          await Promise.all([getUserData(), await postByUser()]);
+
           navigate("/");
+
           toast.success(
             state === "Sign Up"
               ? "Account created successfully!"

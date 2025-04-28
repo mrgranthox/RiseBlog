@@ -13,21 +13,32 @@ export const AppContextProvider = (props) => {
   const [postLists, setPostLists] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const exponentialBackoff = async (fn, retries = 5, delay = 15000) => {
-    return safeRequest(async () => {
-      try {
-        return await fn();
-      } catch (error) {
-        if (retries > 0) {
-          await new Promise((resolve) => setTimeout(resolve, delay));
-          return exponentialBackoff(fn, retries - 1, delay * 2);
-        }
-        throw error;
-      }
-    });
+  // Improved safeRequest function
+  const safeRequest = async (requestFn) => {
+    try {
+      return await requestFn(); // Execute the request
+    } catch (error) {
+      console.error("Request failed:", error); // Log error for debugging
+      throw error; // Rethrow to be caught in retry logic
+    }
   };
 
+  // Improved exponential backoff with retries
+  const exponentialBackoff = async (fn, retries = 5, delay = 15000) => {
+    try {
+      return await safeRequest(fn);
+    } catch (error) {
+      if (retries > 0) {
+        await new Promise((resolve) => setTimeout(resolve, delay)); // Delay retry
+        return exponentialBackoff(fn, retries - 1, delay * 2); // Retry with longer delay
+      }
+      throw error; // Rethrow after all retries are exhausted
+    }
+  };
+
+  // Fetch data function with loading state control
   const fetchData = useCallback(async () => {
+    setLoading(true); // Set loading to true when data is being fetched
     try {
       await Promise.all([
         exponentialBackoff(getAllUsers),
@@ -35,10 +46,10 @@ export const AppContextProvider = (props) => {
       ]);
     } catch {
       toast.error(
-        "Failed to fetch data. Please check your network connection and refresh page."
+        "Failed to fetch data. Please check your network connection and refresh the page."
       );
     } finally {
-      setLoading(false);
+      setLoading(false); // Always set loading to false when done
     }
   }, []);
 
@@ -63,7 +74,6 @@ export const AppContextProvider = (props) => {
   const postByUser = async () => {
     try {
       const response = await axiosInstance.get("/post/user-posts");
-
       setGetPostByUser(response.data.postDataByUser);
     } catch (error) {
       toast.error("Error fetching posts by user");
@@ -101,23 +111,6 @@ export const AppContextProvider = (props) => {
     fetchData();
     checkAuthStatus();
   }, []);
-
-  const safeRequest = async (requestFn) => {
-    const safetyTimeout = setTimeout(() => {
-      if (loading) {
-        setLoading(false);
-      }
-    }, 10000);
-
-    try {
-      return await requestFn();
-    } catch (error) {
-      console.error("Request failed:", error);
-      throw error;
-    } finally {
-      clearTimeout(safetyTimeout);
-    }
-  };
 
   const value = {
     isLoggedin,
